@@ -1,0 +1,27 @@
+materials:
+
+  graphene:
+    type: 2D
+    lattice: hexagonal
+    encut: 520
+    vacuum: 20
+    kmesh: [21,21,1]
+
+  mos2:
+    type: 2D
+    lattice: hexagonal
+    encut: 520
+    vacuum: 20
+    kmesh: [15,15,1]
+
+  gaas:
+    type: 3D
+    lattice: zincblende
+    encut: 520
+    kmesh: [8,8,8]
+
+  gan:
+    type: 3D
+    lattice: wurtzite
+    encut: 520
+    kmesh: [8,8,8]
