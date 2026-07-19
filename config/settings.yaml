@@ -1,3 +1,14 @@
+logging:
+  level: INFO
+  file: logs/dft.log
+
+mpi:
+  executable: /opt/openmpi/bin/mpirun
+  processes: 4
+
+vasp:
+  executable: /mnt/c/vasp/vasp.5.4.4/bin/vasp_std
+
 potcar:
   library: /mnt/c/vasp/POT/PAW_PBE
   mapping: config/potcar_map.yaml
