@@ -18,10 +18,6 @@ class RelaxWorkflow(BaseWorkflow):
         "POTCAR",
     ]
 
-    def __init__(self, workdir="."):
-        super().__init__(workdir)
-        self.templates = TemplateManager()
-
     def prepare(self):
         """
         Prepare geometry optimization.
