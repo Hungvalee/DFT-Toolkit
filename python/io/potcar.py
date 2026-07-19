@@ -1,6 +1,7 @@
 from pathlib import Path
 import shutil
 import yaml
+from python.core.config import ConfigManager
 
 
 class POTCARError(Exception):
@@ -23,33 +24,16 @@ class POTCARManager:
 
     # ---------------------------------------------------------
 
-    def load_config(self, filename=None):
+    def load_config(self):
 
-        if filename is None:
-            filename = (
-                Path(__file__).resolve().parents[2]
-                / "config"
-                / "settings.yaml"
-            )
-
-        filename = Path(filename)
-
-        if not filename.exists():
-            raise POTCARError(
-                f"Config file not found:\n{filename}"
-            )
-
-        with open(filename) as f:
-            cfg = yaml.safe_load(f)
-
-        potcar = cfg.get("potcar", {})
+        cfg = ConfigManager().load()
 
         self.set_library(
-            potcar["library"]
+            cfg.require("potcar.library")
         )
 
         self.load_mapping(
-            potcar["mapping"]
+            cfg.require("potcar.mapping")
         )
 
         return self
