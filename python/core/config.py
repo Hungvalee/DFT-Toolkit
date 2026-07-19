@@ -1,78 +1,114 @@
-"""
-=========================================================
-DFT Toolkit for VASP
-Configuration Manager
-=========================================================
-"""
-
 from pathlib import Path
 import yaml
 
 
 class ConfigError(Exception):
-    """Configuration related errors."""
+    """Raised when configuration is invalid."""
     pass
 
 
-class Config:
-    def __init__(self, filename="config/settings.yaml"):
-        self.root = Path(__file__).resolve().parents[2]
-        self.file = self.root / filename
+class ConfigManager:
+
+    DEFAULT_FILE = (
+        Path(__file__).resolve().parents[2]
+        / "config"
+        / "settings.yaml"
+    )
+
+    def __init__(self, filename=None):
+
+        self.filename = (
+            Path(filename)
+            if filename
+            else self.DEFAULT_FILE
+        )
+
         self.data = {}
 
+    @property
+    def root(self):
+        return self.filename.parent.parent
+
+    @property
+    def config_dir(self):
+        return self.filename.parent
+
     def load(self):
-        if not self.file.exists():
+
+        if not self.filename.exists():
             raise ConfigError(
-                f"Configuration file not found:\n{self.file}"
+                f"Configuration file not found:\n{self.filename}"
             )
 
-        with self.file.open("r", encoding="utf-8") as f:
+        with open(self.filename, "r") as f:
             self.data = yaml.safe_load(f) or {}
 
-        return self.data
+        return self
 
-    def get(self, *keys, default=None):
+    def reload(self):
+        return self.load()
+
+    def save(self):
+
+        with open(self.filename, "w") as f:
+            yaml.safe_dump(
+                self.data,
+                f,
+                sort_keys=False
+            )
+
+    def get(self, key, default=None):
+
         value = self.data
 
-        try:
-            for key in keys:
-                value = value[key]
-            return value
-        except (KeyError, TypeError):
-            return default
+        for part in key.split("."):
 
-    def show(self):
-        import pprint
-        pprint.pprint(self.data)
+            if not isinstance(value, dict):
+                return default
 
+            if part not in value:
+                return default
 
-_config = Config()
+            value = value[part]
 
+        return value
 
-def load_config():
-    """Load configuration file."""
-    return _config.load()
+    def exists(self, key):
 
+        return self.get(key, None) is not None
 
-def get_value(*keys, default=None):
-    """Return configuration value."""
+    def require(self, key):
 
-    if not _config.data:
-        _config.load()
+        value = self.get(key)
 
-    return _config.get(*keys, default=default)
+        if value is None:
+            raise ConfigError(
+                f"Missing configuration:\n{key}"
+            )
 
+        return value
 
-if __name__ == "__main__":
+    def set(self, key, value):
 
-    load_config()
+        parts = key.split(".")
 
-    print("=" * 60)
-    print("DFT Toolkit Configuration")
-    print("=" * 60)
+        d = self.data
 
-    _config.show()
+        for p in parts[:-1]:
+            d = d.setdefault(p, {})
 
-    print()
-    print("VASP :", get_value("vasp", "executable"))
-    print("MPI  :", get_value("mpi", "executable"))
+        d[parts[-1]] = value
+
+    def section(self, name):
+
+        value = self.get(name)
+
+        if value is None:
+            return {}
+
+        if not isinstance(value, dict):
+            raise ConfigError(
+                f"{name} is not a section."
+            )
+
+        return value
