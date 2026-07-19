@@ -9,7 +9,7 @@ from pathlib import Path
 import shutil
 import subprocess
 
-from python.core.config import get_value
+from python.core.config import ConfigManager
 from python.core.logger import get_logger
 from python.io.templates import TemplateManager
 
@@ -34,9 +34,11 @@ class BaseWorkflow:
 
         self.templates = TemplateManager()
 
-        self.vasp = get_value("vasp", "executable")
-        self.mpirun = get_value("mpi", "executable")
-        self.nproc = get_value("mpi", "processes", default=4)
+        self.config = ConfigManager().load()
+
+        self.vasp = self.config.require("vasp.executable")
+        self.mpirun = self.config.require("mpi.executable")
+        self.nproc = self.config.get("mpi.processes", 4)
 
     # =====================================================
     # Validators
