@@ -8,7 +8,7 @@ Logging Manager
 import logging
 from pathlib import Path
 
-from python.core.config import get_value
+from python.core.config import ConfigManager
 
 
 def get_logger(name="DFTToolkit"):
@@ -18,18 +18,20 @@ def get_logger(name="DFTToolkit"):
 
     logger = logging.getLogger(name)
 
-    # Tránh tạo nhiều handler nếu gọi nhiều lần
+    # Avoid duplicate handlers
     if logger.handlers:
         return logger
 
-    level_name = get_value("logging", "level", default="INFO")
-    log_file = get_value("logging", "file", default="logs/dft.log")
+    cfg = ConfigManager().load()
+
+    level_name = cfg.get("logging.level", "INFO")
+    log_file = cfg.get("logging.file", "logs/dft.log")
 
     level = getattr(logging, level_name.upper(), logging.INFO)
 
     logger.setLevel(level)
 
-    root = Path(__file__).resolve().parents[2]
+    root = cfg.root
     logfile = root / log_file
 
     logfile.parent.mkdir(parents=True, exist_ok=True)
@@ -39,11 +41,9 @@ def get_logger(name="DFTToolkit"):
         "%Y-%m-%d %H:%M:%S"
     )
 
-    # File handler
     file_handler = logging.FileHandler(logfile)
     file_handler.setFormatter(formatter)
 
-    # Console handler
     console_handler = logging.StreamHandler()
     console_handler.setFormatter(formatter)
 
