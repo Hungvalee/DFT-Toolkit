@@ -280,6 +280,117 @@ class Poscar:
 
     # -----------------------------------------------------
 
+    # -----------------------------------------------------
+
+    @staticmethod
+    def _dot(a, b):
+        return sum(x * y for x, y in zip(a, b))
+
+    # -----------------------------------------------------
+
+    @staticmethod
+    def _matvec(m, v):
+        return [
+            m[0][0]*v[0] + m[0][1]*v[1] + m[0][2]*v[2],
+            m[1][0]*v[0] + m[1][1]*v[1] + m[1][2]*v[2],
+            m[2][0]*v[0] + m[2][1]*v[1] + m[2][2]*v[2],
+        ]
+
+    # -----------------------------------------------------
+
+    @staticmethod
+    def _inverse3(m):
+
+        a,b,c = m[0]
+        d,e,f = m[1]
+        g,h,i = m[2]
+
+        det = (
+            a*(e*i-f*h)
+            - b*(d*i-f*g)
+            + c*(d*h-e*g)
+        )
+
+        if abs(det) < 1e-12:
+            raise PoscarError("Singular lattice matrix.")
+
+        return [
+            [(e*i-f*h)/det, (c*h-b*i)/det, (b*f-c*e)/det],
+            [(f*g-d*i)/det, (a*i-c*g)/det, (c*d-a*f)/det],
+            [(d*h-e*g)/det, (b*g-a*h)/det, (a*e-b*d)/det],
+        ]
+
+    # -----------------------------------------------------
+
+    def to_cartesian(self):
+
+        if self.is_cartesian:
+            return
+
+        lattice = [
+            [x*self.scale for x in row]
+            for row in self.lattice
+        ]
+
+        self.coordinates = [
+            self._matvec(lattice, p)
+            for p in self.coordinates
+        ]
+
+        self.coordinate_type = "Cartesian"
+
+    # -----------------------------------------------------
+
+    def to_direct(self):
+
+        if self.is_direct:
+            return
+
+        lattice = [
+            [x*self.scale for x in row]
+            for row in self.lattice
+        ]
+
+        inv = self._inverse3(lattice)
+
+        self.coordinates = [
+            self._matvec(inv, p)
+            for p in self.coordinates
+        ]
+
+        self.coordinate_type = "Direct"
+
+    # -----------------------------------------------------
+
+    def translate(self, dx=0.0, dy=0.0, dz=0.0):
+
+        for xyz in self.coordinates:
+            xyz[0] += dx
+            xyz[1] += dy
+            xyz[2] += dz
+
+    # -----------------------------------------------------
+
+    def center(self):
+
+        if not self.coordinates:
+            return
+
+        if self.is_cartesian:
+            self.to_direct()
+
+        xs = [c[0] for c in self.coordinates]
+        ys = [c[1] for c in self.coordinates]
+        zs = [c[2] for c in self.coordinates]
+
+        self.translate(
+            0.5 - (min(xs)+max(xs))/2,
+            0.5 - (min(ys)+max(ys))/2,
+            0.5 - (min(zs)+max(zs))/2,
+        )
+
+    # -----------------------------------------------------
+
     def summary(self):
 
         print("POSCAR Summary")
