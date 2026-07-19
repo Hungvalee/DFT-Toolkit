@@ -1,0 +1,33 @@
+general:
+  project: DFT Toolkit
+  version: 0.1.0
+  author: Le Van Hung
+
+python:
+  executable: python3
+
+mpi:
+  executable: /opt/openmpi/bin/mpirun
+  processes: 4
+
+vasp:
+  executable: /mnt/c/vasp/vasp.5.4.4/bin/vasp_std
+
+vaspkit:
+  executable: /mnt/c/vasp/vaspkit.1.3.5/bin/vaspkit
+
+phonopy:
+  executable: phonopy
+
+templates:
+  incar: templates/INCAR
+  kpoints: templates/KPOINTS
+  potcar: templates/POTCAR
+
+plot:
+  dpi: 300
+  format: png
+
+logging:
+  level: INFO
+  file: logs/dft.log
