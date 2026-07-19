@@ -6,7 +6,6 @@ Geometry Relaxation Workflow
 """
 
 from python.workflow.base import BaseWorkflow
-from python.io.templates import TemplateManager
 
 
 class RelaxWorkflow(BaseWorkflow):

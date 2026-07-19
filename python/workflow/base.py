@@ -11,6 +11,7 @@ import subprocess
 
 from python.core.config import get_value
 from python.core.logger import get_logger
+from python.io.templates import TemplateManager
 
 
 class WorkflowError(Exception):
@@ -30,6 +31,8 @@ class BaseWorkflow:
         self.workdir = Path(workdir).resolve()
 
         self.logger = get_logger(self.__class__.__name__)
+
+        self.templates = TemplateManager()
 
         self.vasp = get_value("vasp", "executable")
         self.mpirun = get_value("mpi", "executable")
