@@ -1,0 +1,13 @@
+name: DFT Toolkit
+
+version: 0.1.0
+
+release: alpha
+
+author: Le Van Hung
+
+license: MIT
+
+python: ">=3.10"
+
+last_update: "2026-07-19"
