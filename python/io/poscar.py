@@ -391,6 +391,89 @@ class Poscar:
 
     # -----------------------------------------------------
 
+    # -----------------------------------------------------
+
+    def scale_lattice(self, factor):
+
+        self.scale *= float(factor)
+
+    # -----------------------------------------------------
+
+    def add_vacuum(self, vacuum, axis="z"):
+
+        if not self.is_cartesian:
+            self.to_cartesian()
+
+        axis = axis.lower()
+
+        idx = {"x":0, "y":1, "z":2}[axis]
+
+        length = (
+            self.lattice[idx][0]**2 +
+            self.lattice[idx][1]**2 +
+            self.lattice[idx][2]**2
+        )**0.5 * self.scale
+
+        new_length = length + vacuum
+
+        factor = new_length / length
+
+        self.lattice[idx] = [
+            x * factor
+            for x in self.lattice[idx]
+        ]
+
+        self.to_direct()
+
+    # -----------------------------------------------------
+
+    def supercell(self, nx=1, ny=1, nz=1):
+
+        if not self.is_direct:
+            self.to_direct()
+
+        new_coords = []
+
+        total = nx * ny * nz
+
+        for ix in range(nx):
+            for iy in range(ny):
+                for iz in range(nz):
+
+                    shift = [ix, iy, iz]
+
+                    for xyz in self.coordinates:
+
+                        new_coords.append([
+                            (xyz[0] + shift[0]) / nx,
+                            (xyz[1] + shift[1]) / ny,
+                            (xyz[2] + shift[2]) / nz,
+                        ])
+
+        self.coordinates = new_coords
+
+        self.counts = [
+            n * total
+            for n in self.counts
+        ]
+
+        self.lattice[0] = [
+            x * nx
+            for x in self.lattice[0]
+        ]
+
+        self.lattice[1] = [
+            x * ny
+            for x in self.lattice[1]
+        ]
+
+        self.lattice[2] = [
+            x * nz
+            for x in self.lattice[2]
+        ]
+
+    # -----------------------------------------------------
+
     def summary(self):
 
         print("POSCAR Summary")
