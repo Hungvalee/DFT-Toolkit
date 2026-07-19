@@ -11,7 +11,7 @@ import subprocess
 from pathlib import Path
 
 from python.core.version import show_version
-
+from python.workflow.relax import RelaxWorkflow
 
 ROOT = Path(__file__).resolve().parents[2]
 
@@ -62,6 +62,17 @@ def cmd_init(args):
     )
 
 
+def cmd_relax(args):
+    """Run geometry relaxation workflow."""
+
+    try:
+        workflow = RelaxWorkflow(args.directory)
+        workflow.run()
+
+    except Exception as e:
+        print(f"\nERROR: {e}")
+
+
 def build_parser():
 
     parser = argparse.ArgumentParser(
@@ -71,15 +82,45 @@ def build_parser():
 
     sub = parser.add_subparsers(dest="command")
 
-    p = sub.add_parser("version", help="Show version")
+    # version
+    p = sub.add_parser(
+        "version",
+        help="Show program version"
+    )
     p.set_defaults(func=cmd_version)
 
-    p = sub.add_parser("doctor", help="Check environment")
+    # doctor
+    p = sub.add_parser(
+        "doctor",
+        help="Check environment"
+    )
     p.set_defaults(func=cmd_doctor)
 
-    p = sub.add_parser("init", help="Create project")
-    p.add_argument("project")
+    # init
+    p = sub.add_parser(
+        "init",
+        help="Create a new DFT project"
+    )
+    p.add_argument(
+        "project",
+        help="Project name"
+    )
     p.set_defaults(func=cmd_init)
+
+    # relax
+    p = sub.add_parser(
+        "relax",
+        help="Run geometry relaxation"
+    )
+
+    p.add_argument(
+        "-d",
+        "--directory",
+        default=".",
+        help="Working directory"
+    )
+
+    p.set_defaults(func=cmd_relax)
 
     return parser
 
