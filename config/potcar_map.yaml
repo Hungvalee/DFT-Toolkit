@@ -1,0 +1,40 @@
+# Group III-V
+Al: Al
+Ga: Ga_d
+In: In_d
+
+# Group IV
+C: C
+Si: Si
+Ge: Ge
+
+# Group V
+N: N
+P: P
+As: As
+Sb: Sb
+
+# Chalcogens
+O: O
+S: S
+Se: Se
+Te: Te
+
+# Transition metals
+Ti: Ti_pv
+V: V_pv
+Cr: Cr_pv
+Mn: Mn_pv
+Fe: Fe_pv
+Co: Co
+Ni: Ni
+Cu: Cu
+Zn: Zn
+
+Nb: Nb_pv
+Mo: Mo_sv
+Ta: Ta_pv
+W: W_sv
+
+Zr: Zr_sv
+Hf: Hf_pv
