@@ -22,7 +22,9 @@ class EIGENVALParser(BaseParser):
 
         self.kpoints = None
         self.weights = None
+
         self.eigenvalues = None
+        self.occupations = None
 
     # -------------------------------------------------
 
@@ -40,7 +42,9 @@ class EIGENVALParser(BaseParser):
 
         kpts = []
         weights = []
+
         eig = []
+        occ = []
 
         i = 7
 
@@ -60,14 +64,17 @@ class EIGENVALParser(BaseParser):
             weights.append(float(cols[3]))
 
             bands = []
+            obands = []
 
             for j in range(self.nbands):
 
-                cols = self.lines[i+1+j].split()
+                cols = self.lines[i + 1 + j].split()
 
                 bands.append(float(cols[1]))
+                obands.append(float(cols[2]))
 
             eig.append(bands)
+            occ.append(obands)
 
             i += self.nbands + 2
 
@@ -76,9 +83,9 @@ class EIGENVALParser(BaseParser):
         self.weights = np.array(weights)
 
         self.eigenvalues = np.array(eig)
+        self.occupations = np.array(occ)
 
         return self
-
 
     # -------------------------------------------------
 
@@ -106,11 +113,9 @@ class EIGENVALParser(BaseParser):
 
         print()
 
-        print("="*60)
-
+        print("=" * 60)
         print("EIGENVAL Summary")
-
-        print("="*60)
+        print("=" * 60)
 
         print(f"NELECT : {self.nelect}")
         print(f"NKPTS  : {self.nkpts}")
@@ -118,8 +123,8 @@ class EIGENVALParser(BaseParser):
 
         print()
 
-        print(f"Shape   : {self.shape}")
-        print(f"K-points: {len(self)}")
+        print(f"Shape        : {self.shape}")
+        print(f"Occupations  : {self.occupations.shape}")
+        print(f"K-points     : {len(self)}")
 
-        print("="*60)
-
+        print("=" * 60)
