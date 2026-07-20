@@ -20,7 +20,23 @@ class FatBandPlotter:
 
         self.scale = 300
 
+        #
+        # Default x-axis
+        #
         self.x = np.arange(parser.nkpts)
+
+    # -------------------------------------------------
+
+    def set_kdistance(self, x):
+
+        x = np.asarray(x)
+
+        if len(x) != self.parser.nkpts:
+            raise ValueError("Length mismatch.")
+
+        self.x = x
+
+        return self
 
     # -------------------------------------------------
 
@@ -64,7 +80,7 @@ class FatBandPlotter:
                 self.x,
                 self.parser.band_energy[:, b],
                 s=self.scale * weight[:, b],
-                color=color,
+                c=color,
                 alpha=alpha,
                 linewidths=0,
                 zorder=2
@@ -74,17 +90,71 @@ class FatBandPlotter:
 
     # -------------------------------------------------
 
-    def xlabel(self, label):
+    def add_fermi(self,
+                  energy=0.0,
+                  **kwargs):
 
-        self.ax.set_xlabel(label)
+        defaults = {
+            "color": "gray",
+            "linestyle": "--",
+            "linewidth": 0.8
+        }
+
+        defaults.update(kwargs)
+
+        self.ax.axhline(
+            energy,
+            **defaults
+        )
 
         return self
 
     # -------------------------------------------------
 
-    def ylabel(self, label):
+    def add_vertical_lines(self,
+                           positions,
+                           **kwargs):
 
-        self.ax.set_ylabel(label)
+        defaults = {
+            "color": "gray",
+            "linewidth": 0.5
+        }
+
+        defaults.update(kwargs)
+
+        for p in positions:
+            self.ax.axvline(p, **defaults)
+
+        return self
+
+    # -------------------------------------------------
+
+    def set_xticks(self,
+                   positions,
+                   labels):
+
+        self.ax.set_xticks(positions)
+        self.ax.set_xticklabels(labels)
+
+        return self
+
+    # -------------------------------------------------
+
+    def xlabel(self, text):
+
+        self.ax.set_xlabel(text)
+
+        return self
+
+    def ylabel(self, text):
+
+        self.ax.set_ylabel(text)
+
+        return self
+
+    def title(self, text):
+
+        self.ax.set_title(text)
 
         return self
 
@@ -96,11 +166,17 @@ class FatBandPlotter:
 
         return self
 
-    # -------------------------------------------------
-
     def set_ylim(self, ymin, ymax):
 
         self.ax.set_ylim(ymin, ymax)
+
+        return self
+
+    # -------------------------------------------------
+
+    def grid(self):
+
+        self.ax.grid(alpha=0.3)
 
         return self
 
@@ -120,7 +196,8 @@ class FatBandPlotter:
 
         self.fig.savefig(
             filename,
-            dpi=300
+            dpi=300,
+            bbox_inches="tight"
         )
 
     # -------------------------------------------------
