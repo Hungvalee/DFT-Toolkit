@@ -24,6 +24,8 @@ class DOSCARParser(BaseParser):
         self.total_dos = None
         self.integrated_dos = None
 
+        self.blocks = []
+
         self.emin = None
         self.emax = None
 
@@ -53,6 +55,8 @@ class DOSCARParser(BaseParser):
         dos = []
         idos = []
 
+        block = []
+
         for line in self.lines[6:6+self.nedos]:
 
             cols = line.split()
@@ -64,15 +68,27 @@ class DOSCARParser(BaseParser):
             dos.append(float(cols[1]))
             idos.append(float(cols[2]))
 
+            block.append(cols)
+
         self.energy = np.array(energy)
         self.total_dos = np.array(dos)
         self.integrated_dos = np.array(idos)
+
+        self.blocks.append(block)
 
         self.emin = float(self.energy.min())
         self.emax = float(self.energy.max())
 
         return self
 
+
+
+    @property
+    def total_block(self):
+
+        return self.blocks[0]
+
+    # -------------------------------------------------
 
     # -------------------------------------------------
 

@@ -19,6 +19,59 @@ class BandPlotter:
 
         self.fermi = 0.0
 
+        self.ymin = None
+        self.ymax = None
+
+        self.klabels = None
+        self.kticks = None
+
+        self.linewidth = 0.8
+        self.title = None
+
+
+    # -------------------------------------------------
+
+    def set_fermi(self,value):
+
+        self.fermi=float(value)
+
+        return self
+
+    # -------------------------------------------------
+
+    def set_ylim(self,ymin,ymax):
+
+        self.ymin=float(ymin)
+        self.ymax=float(ymax)
+
+        return self
+
+    # -------------------------------------------------
+
+    def set_kpath(self,labels,ticks):
+
+        self.klabels=list(labels)
+        self.kticks=list(ticks)
+
+        return self
+
+
+    # -------------------------------------------------
+
+    def set_linewidth(self,value):
+
+        self.linewidth=float(value)
+
+        return self
+
+    # -------------------------------------------------
+
+    def set_title(self,title):
+
+        self.title=str(title)
+
+        return self
+
     # -------------------------------------------------
 
     def plot(self):
@@ -34,19 +87,49 @@ class BandPlotter:
             self.axes.plot(
                 x,
                 y,
-                linewidth=1.0
+                linewidth=self.linewidth
             )
 
         self.axes.axhline(
             0.0,
-            linestyle="--"
+            linestyle="--",
+            linewidth=0.8
         )
 
-        self.axes.set_xlabel("k-point")
+        if self.ymin is not None:
+
+            self.axes.set_ylim(
+                self.ymin,
+                self.ymax
+            )
+
+        if self.kticks is not None:
+
+            self.axes.set_xticks(self.kticks)
+
+            self.axes.set_xticklabels(
+                self.klabels
+            )
+
+            for x in self.kticks:
+
+                self.axes.axvline(
+                    x,
+                    linewidth=0.5
+                )
+
+        self.axes.tick_params(
+            direction="in",
+            top=True,
+            right=True
+        )
+
+        self.axes.set_xlabel("")
 
         self.axes.set_ylabel("Energy (eV)")
 
-        self.axes.set_title("Band Structure")
+        if self.title is not None:
+            self.axes.set_title(self.title)
 
         return self
 
