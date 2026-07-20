@@ -26,6 +26,8 @@ class DOSCARParser(BaseParser):
 
         self.blocks = []
 
+        self.pdos = []
+
         self.emin = None
         self.emax = None
 
@@ -76,6 +78,34 @@ class DOSCARParser(BaseParser):
 
         self.blocks.append(block)
 
+        # -----------------------------------------------
+        # Read projected DOS
+        # -----------------------------------------------
+
+        start = 6 + self.nedos
+
+        while start < len(self.lines):
+
+            line = self.lines[start].strip()
+
+            if not line:
+                start += 1
+                continue
+
+            start += 1
+
+            atom = []
+
+            for _ in range(self.nedos):
+
+                cols = list(map(float, self.lines[start].split()))
+
+                atom.append(cols)
+
+                start += 1
+
+            self.pdos.append(np.array(atom))
+
         self.emin = float(self.energy.min())
         self.emax = float(self.energy.max())
 
@@ -89,6 +119,14 @@ class DOSCARParser(BaseParser):
         return self.blocks[0]
 
     # -------------------------------------------------
+
+    @property
+    def natoms(self):
+
+        return len(self.pdos)
+
+    # -------------------------------------------------
+
 
     # -------------------------------------------------
 
@@ -116,6 +154,7 @@ class DOSCARParser(BaseParser):
         print(f"NEDOS   : {self.nedos}")
         print(f"E-fermi : {self.efermi}")
         print(f"Points  : {len(self.energy)}")
+        print(f"PDOS atoms : {self.natoms}")
         print(f"Range   : {self.emin:.3f} -> {self.emax:.3f} eV")
 
         print("=" * 60)
