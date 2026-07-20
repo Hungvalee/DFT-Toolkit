@@ -22,6 +22,8 @@ class OUTCARParser(BaseParser):
         self.nelect = None
         self.fermi = None
         self.energy = None
+        self.converged = False
+        self.cpu_time = None
 
     # -------------------------------------------------
 
@@ -82,6 +84,17 @@ class OUTCARParser(BaseParser):
                     line.split()[-2]
                 )
 
+            if "reached required accuracy" in line.lower():
+                self.converged = True
+
+            m = re.search(
+                r"Elapsed time \(sec\):\s*([0-9.]+)",
+                line
+            )
+
+            if m:
+                self.cpu_time = float(m.group(1))
+
         return self
 
     # -------------------------------------------------
@@ -100,7 +113,9 @@ class OUTCARParser(BaseParser):
         print(f"ENCUT   : {self.encut}")
         print(f"NIONS   : {self.nions}")
         print(f"NELECT  : {self.nelect}")
-        print(f"E-fermi : {self.fermi}")
-        print(f"TOTEN   : {self.energy}")
+        print(f"E-fermi   : {self.fermi}")
+        print(f"TOTEN     : {self.energy}")
+        print(f"Converged : {self.converged}")
+        print(f"CPU Time  : {self.cpu_time}")
 
         print("="*60)
