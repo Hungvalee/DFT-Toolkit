@@ -1,11 +1,25 @@
+# Python
 __pycache__/
-*.pyc
-*.pyo
-*.swp
+*.py[cod]
+*.so
 
-logs/*.log
+# Virtual environments
+.venv/
+venv/
 
+# IDE
 .vscode/
 .idea/
 
+# Logs
+*.log
+
+# Backup
+*.bak
+
+# Test figures
+band*.png
+dos*.png
+
+# macOS
 .DS_Store
