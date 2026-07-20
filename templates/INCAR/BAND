@@ -1,0 +1,19 @@
+SYSTEM = Band Structure
+
+ISTART = 1
+ICHARG = 11
+
+ENCUT = 520
+PREC = Accurate
+EDIFF = 1E-6
+NELM = 100
+
+IBRION = -1
+NSW = 0
+
+ISMEAR = 0
+SIGMA = 0.05
+
+LWAVE = .FALSE.
+LCHARG = .FALSE.
+LREAL = .FALSE.
