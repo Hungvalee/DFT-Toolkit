@@ -474,6 +474,82 @@ class Poscar:
 
     # -----------------------------------------------------
 
+    # -----------------------------------------------------
+
+    def scale_lattice(self, factor):
+
+        self.scale *= float(factor)
+
+    # -----------------------------------------------------
+
+    def add_vacuum(self, vacuum, axis="z"):
+
+        axis = axis.lower()
+
+        index = {"x":0, "y":1, "z":2}[axis]
+
+        length = (
+            self.lattice[index][0]**2 +
+            self.lattice[index][1]**2 +
+            self.lattice[index][2]**2
+        )**0.5
+
+        factor = (length*self.scale + vacuum)/(length*self.scale)
+
+        self.lattice[index] = [
+            x*factor
+            for x in self.lattice[index]
+        ]
+
+    # -----------------------------------------------------
+
+    def supercell(self, nx=1, ny=1, nz=1):
+
+        if not self.is_direct:
+            raise PoscarError(
+                "supercell() requires Direct coordinates."
+            )
+
+        new_coords = []
+
+        for ix in range(nx):
+            for iy in range(ny):
+                for iz in range(nz):
+
+                    for xyz in self.coordinates:
+
+                        new_coords.append([
+                            (xyz[0]+ix)/nx,
+                            (xyz[1]+iy)/ny,
+                            (xyz[2]+iz)/nz,
+                        ])
+
+        self.coordinates = new_coords
+
+        factor = nx*ny*nz
+
+        self.counts = [
+            n*factor
+            for n in self.counts
+        ]
+
+        self.lattice[0] = [
+            x*nx
+            for x in self.lattice[0]
+        ]
+
+        self.lattice[1] = [
+            x*ny
+            for x in self.lattice[1]
+        ]
+
+        self.lattice[2] = [
+            x*nz
+            for x in self.lattice[2]
+        ]
+
+    # -----------------------------------------------------
+
     def summary(self):
 
         print("POSCAR Summary")
