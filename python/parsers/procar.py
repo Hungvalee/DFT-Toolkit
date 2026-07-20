@@ -13,6 +13,19 @@ from python.parsers.base import BaseParser
 
 class PROCARParser(BaseParser):
 
+    orbital_names = [
+        "s",
+        "py",
+        "pz",
+        "px",
+        "dxy",
+        "dyz",
+        "dz2",
+        "dxz",
+        "dx2",
+        "tot",
+    ]
+
     def __init__(self):
 
         super().__init__()
@@ -26,6 +39,8 @@ class PROCARParser(BaseParser):
 
         self.band_energy = []
         self.band_occ = []
+
+        self.projections = None
 
     # -------------------------------------------------
 
@@ -47,14 +62,19 @@ class PROCARParser(BaseParser):
                 break
 
         if self.nkpts is None:
-
             raise RuntimeError("Invalid PROCAR file.")
 
-        #
-        # Read k-points and bands
-        #
-        for line in self.lines:
+        proj = []
 
+        i = 0
+
+        while i < len(self.lines):
+
+            line = self.lines[i]
+
+            #
+            # k-point
+            #
             if line.startswith(" k-point"):
 
                 nums = re.findall(r"[-+]?\d+\.\d+", line)
@@ -62,17 +82,47 @@ class PROCARParser(BaseParser):
                 self.kpoints.append([
                     float(nums[0]),
                     float(nums[1]),
-                    float(nums[2])
+                    float(nums[2]),
                 ])
 
                 self.weights.append(float(nums[3]))
 
+            #
+            # band
+            #
             elif line.startswith("band"):
 
                 nums = re.findall(r"[-+]?\d+\.\d+", line)
 
                 self.band_energy.append(float(nums[0]))
                 self.band_occ.append(float(nums[1]))
+
+                #
+                # skip blank + orbital header
+                #
+                i += 2
+
+                atom_proj = []
+
+                #
+                # ion table
+                #
+                for atom in range(self.nions):
+
+                    cols = self.lines[i + 1 + atom].split()
+
+                    atom_proj.append(
+                        list(map(float, cols[1:11]))
+                    )
+
+                proj.append(atom_proj)
+
+                #
+                # skip
+                #
+                i += self.nions + 2
+
+            i += 1
 
         self.kpoints = np.array(self.kpoints)
 
@@ -92,6 +142,15 @@ class PROCARParser(BaseParser):
             self.nbands
         )
 
+        self.projections = np.array(
+            proj
+        ).reshape(
+            self.nkpts,
+            self.nbands,
+            self.nions,
+            10
+        )
+
         return self
 
     # -------------------------------------------------
@@ -100,6 +159,14 @@ class PROCARParser(BaseParser):
     def shape(self):
 
         return self.band_energy.shape
+
+    # -------------------------------------------------
+
+    def orbital(self, atom, orbital):
+
+        idx = self.orbital_names.index(orbital)
+
+        return self.projections[:, :, atom - 1, idx]
 
     # -------------------------------------------------
 
@@ -117,9 +184,10 @@ class PROCARParser(BaseParser):
 
         print()
 
-        print(f"KPOINTS : {self.kpoints.shape}")
-        print(f"BANDS   : {self.band_energy.shape}")
-        print(f"OCC     : {self.band_occ.shape}")
+        print(f"KPOINTS    : {self.kpoints.shape}")
+        print(f"BANDS      : {self.band_energy.shape}")
+        print(f"OCC        : {self.band_occ.shape}")
+        print(f"PROJECTION : {self.projections.shape}")
 
         print("=" * 60)
 
