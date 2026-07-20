@@ -9,6 +9,7 @@ import re
 import numpy as np
 
 from python.parsers.base import BaseParser
+from python.core.bandstructure import BandStructure
 
 
 class PROCARParser(BaseParser):
@@ -169,6 +170,19 @@ class PROCARParser(BaseParser):
         return self.projections[:, :, atom - 1, idx]
 
     # -------------------------------------------------
+
+
+    # -------------------------------------------------
+
+    def to_bandstructure(self):
+
+        return BandStructure(
+            kpoints=self.kpoints,
+            energies=self.band_energy,
+            occupations=self.band_occ,
+            projections=self.projections,
+        )
+
 
     def summary(self):
 
