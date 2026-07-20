@@ -67,6 +67,33 @@ class BandGapAnalyzer:
 
     # -------------------------------------------------
 
+    @property
+    def gap_type(self):
+
+        return "Direct" if self.is_direct else "Indirect"
+
+    # -------------------------------------------------
+
+    def to_dict(self):
+
+        return {
+
+            "vbm": float(self.vbm),
+            "cbm": float(self.cbm),
+            "gap": float(self.gap),
+
+            "gap_type": self.gap_type,
+
+            "vbm_kpoint": int(self.vbm_kpoint),
+            "cbm_kpoint": int(self.cbm_kpoint),
+
+            "vbm_band": int(self.vbm_band),
+            "cbm_band": int(self.cbm_band)
+
+        }
+
+    # -------------------------------------------------
+
     def summary(self):
 
         print()
@@ -79,6 +106,7 @@ class BandGapAnalyzer:
         print(f"Gap : {self.gap:.6f} eV")
 
         print()
+
         print(f"VBM k-point : {self.vbm_kpoint}")
         print(f"VBM band    : {self.vbm_band}")
 
@@ -86,10 +114,8 @@ class BandGapAnalyzer:
         print(f"CBM band    : {self.cbm_band}")
 
         print()
-        print(
-            "Gap type    :",
-            "Direct" if self.is_direct else "Indirect"
-        )
+
+        print(f"Gap type    : {self.gap_type}")
 
         print("=" * 60)
 
