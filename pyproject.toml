@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dft-toolkit"
+version = "0.2.0"
+description = "Python toolkit for VASP electronic structure analysis"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+
+authors = [
+    {name = "Le Van Hung"}
+]
+
+dependencies = [
+    "numpy",
+    "matplotlib"
+]
+
+[tool.setuptools]
+packages = [
+    "python",
+    "python.core",
+    "python.parsers",
+    "python.plotting",
+    "python.analysis"
+]
