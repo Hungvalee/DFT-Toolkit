@@ -24,6 +24,9 @@ class DOSCARParser(BaseParser):
         self.total_dos = None
         self.integrated_dos = None
 
+        self.emin = None
+        self.emax = None
+
     # -------------------------------------------------
 
     def parse(self):
@@ -65,7 +68,24 @@ class DOSCARParser(BaseParser):
         self.total_dos = np.array(dos)
         self.integrated_dos = np.array(idos)
 
+        self.emin = float(self.energy.min())
+        self.emax = float(self.energy.max())
+
         return self
+
+
+    # -------------------------------------------------
+
+    @property
+    def shifted_energy(self):
+
+        return self.energy - self.efermi
+
+    # -------------------------------------------------
+
+    def __len__(self):
+
+        return len(self.energy)
 
     # -------------------------------------------------
 
@@ -80,6 +100,7 @@ class DOSCARParser(BaseParser):
         print(f"NEDOS   : {self.nedos}")
         print(f"E-fermi : {self.efermi}")
         print(f"Points  : {len(self.energy)}")
+        print(f"Range   : {self.emin:.3f} -> {self.emax:.3f} eV")
 
         print("=" * 60)
 
