@@ -79,6 +79,27 @@ class EIGENVALParser(BaseParser):
 
         return self
 
+
+    # -------------------------------------------------
+
+    @property
+    def shape(self):
+
+        return self.eigenvalues.shape
+
+    # -------------------------------------------------
+
+    @property
+    def bands(self):
+
+        return range(self.nbands)
+
+    # -------------------------------------------------
+
+    def __len__(self):
+
+        return self.nkpts
+
     # -------------------------------------------------
 
     def summary(self):
@@ -97,9 +118,8 @@ class EIGENVALParser(BaseParser):
 
         print()
 
-        print("Eigenvalue array:")
-
-        print(self.eigenvalues.shape)
+        print(f"Shape   : {self.shape}")
+        print(f"K-points: {len(self)}")
 
         print("="*60)
 
