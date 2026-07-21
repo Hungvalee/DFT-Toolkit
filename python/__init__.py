@@ -31,3 +31,4 @@ from .io import JSONReportWriter
 from .io import CSVReportWriter
 from .parsers import KPOINTSParser
 from .parsers import VASPRUNParser
+from .parsers import POTCARParser
