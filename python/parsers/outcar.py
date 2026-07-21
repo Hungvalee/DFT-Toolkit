@@ -84,7 +84,12 @@ class OUTCARParser(BaseParser):
                     line.split()[-2]
                 )
 
-            if "reached required accuracy" in line.lower():
+            text = line.lower()
+
+            if (
+                "reached required accuracy" in text
+                or "ediff is reached" in text
+            ):
                 self.converged = True
 
             m = re.search(
