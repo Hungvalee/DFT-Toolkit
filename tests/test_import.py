@@ -39,3 +39,6 @@ def test_outcar():
 
 def test_xdatcar():
     from python import XDATCARParser
+
+def test_chgcar():
+    from python import CHGCARParser
