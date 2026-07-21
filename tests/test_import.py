@@ -60,3 +60,6 @@ def test_charge_difference():
 
 def test_density_profile():
     from python import DensityProfileAnalyzer
+
+def test_profile_writer():
+    from python import ProfileWriter
