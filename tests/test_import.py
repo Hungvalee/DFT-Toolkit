@@ -57,3 +57,6 @@ def test_effective_mass():
 
 def test_charge_difference():
     from python import ChargeDifferenceAnalyzer
+
+def test_density_profile():
+    from python import DensityProfileAnalyzer

@@ -19,3 +19,4 @@ from .parsers import LOCPOTParser
 from .core import BandStructure
 from .analysis import EffectiveMassAnalyzer
 from .analysis import ChargeDifferenceAnalyzer
+from .analysis import DensityProfileAnalyzer
