@@ -87,3 +87,6 @@ def test_json_report_writer():
 
 def test_csv_report_writer():
     from python import CSVReportWriter
+
+def test_incar():
+    from python import INCARParser

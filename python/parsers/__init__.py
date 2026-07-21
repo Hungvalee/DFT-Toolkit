@@ -6,3 +6,4 @@ from .poscar import POSCARParser
 from .xdatcar import XDATCARParser
 from .chgcar import CHGCARParser
 from .locpot import LOCPOTParser
+from .incar import INCARParser
