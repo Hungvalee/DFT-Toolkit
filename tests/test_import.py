@@ -96,3 +96,7 @@ def test_kpoints_parser():
 
 def test_vasprun():
     from python import VASPRUNParser
+
+
+def test_cli():
+    from python.cli import main

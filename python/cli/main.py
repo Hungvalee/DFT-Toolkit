@@ -1,46 +1,24 @@
 import argparse
 
-from python import (
-    OUTCARParser,
-    EIGENVALParser,
-    PROCARParser,
-    BandStructure,
-    ElectronicStructureReport,
-)
+from python import __version__
 
 
 def main():
-
     parser = argparse.ArgumentParser(
-        prog="dft-toolkit"
+        prog="dft-toolkit",
+        description="DFT-Toolkit: A Python toolkit for VASP analysis"
     )
 
-    sub = parser.add_subparsers(dest="command")
+    parser.add_argument(
+        "--version",
+        action="version",
+        version=f"%(prog)s {__version__}"
+    )
 
-    report = sub.add_parser("report")
+    parser.parse_args()
 
-    report.add_argument("--outcar", required=True)
-    report.add_argument("--eigenval", required=True)
-    report.add_argument("--procar", required=True)
-
-    args = parser.parse_args()
-
-    if args.command == "report":
-
-        outcar = OUTCARParser().read(args.outcar).parse()
-        eigen = EIGENVALParser().read(args.eigenval).parse()
-        procar = PROCARParser().read(args.procar).parse()
-
-        bs = BandStructure.from_vasp(
-            outcar,
-            eigen,
-            procar,
-        )
-
-        result = ElectronicStructureReport(bs).as_dict()
-
-        for key, value in result.items():
-            print(f"{key:15s}: {value}")
+    print("DFT-Toolkit")
+    print("Use --help to see available commands.")
 
 
 if __name__ == "__main__":
