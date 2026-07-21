@@ -9,3 +9,6 @@ from .core import *
 from .parsers import *
 from .plotting import *
 from .analysis import *
+from .core import Structure
+from .parsers import POSCARParser
+from .io import POSCARWriter

@@ -1,1 +1,1 @@
-from .bandstructure import BandStructure
+from .structure import Structure
