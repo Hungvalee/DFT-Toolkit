@@ -12,3 +12,4 @@ from .analysis import *
 from .core import Structure
 from .parsers import POSCARParser
 from .io import POSCARWriter
+from .parsers import XDATCARParser

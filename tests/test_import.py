@@ -36,3 +36,6 @@ def test_outcar():
     from python import OUTCARParser
 
     assert OUTCARParser is not None
+
+def test_xdatcar():
+    from python import XDATCARParser
