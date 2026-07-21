@@ -3,3 +3,4 @@ from .effective_mass import EffectiveMassAnalyzer
 from .charge_difference import ChargeDifferenceAnalyzer
 from .density_profile import DensityProfileAnalyzer
 from .bandgap import BandGapAnalyzer
+from .electronic_structure_report import ElectronicStructureReport

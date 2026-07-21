@@ -78,3 +78,6 @@ def test_bandgap_analyzer():
 
 def test_bandgap_result():
     from python import BandGapResult
+
+def test_electronic_structure_report():
+    from python import ElectronicStructureReport
