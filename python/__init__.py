@@ -33,3 +33,4 @@ from .io import CSVReportWriter
 from .parsers import KPOINTSParser
 from .parsers import VASPRUNParser
 from .parsers import POTCARParser
+from .exceptions import DFTToolkitError, ParserError, InvalidFileError

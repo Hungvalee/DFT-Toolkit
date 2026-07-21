@@ -100,3 +100,10 @@ def test_vasprun():
 
 def test_cli():
     from python.cli import main
+
+def test_exceptions():
+    from python import (
+        DFTToolkitError,
+        ParserError,
+        InvalidFileError,
+    )
