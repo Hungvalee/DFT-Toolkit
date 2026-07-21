@@ -51,3 +51,6 @@ def test_work_function():
 
 def test_bandstructure():
     from python import BandStructure
+
+def test_effective_mass():
+    from python import EffectiveMassAnalyzer
