@@ -48,3 +48,6 @@ def test_locpot():
 
 def test_work_function():
     from python import WorkFunctionAnalyzer
+
+def test_bandstructure():
+    from python import BandStructure

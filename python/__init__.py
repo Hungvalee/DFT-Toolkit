@@ -16,3 +16,4 @@ from .parsers import XDATCARParser
 from .parsers import CHGCARParser
 from .analysis import WorkFunctionAnalyzer
 from .parsers import LOCPOTParser
+from .core import BandStructure

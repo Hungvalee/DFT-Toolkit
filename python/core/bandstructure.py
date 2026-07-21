@@ -1,48 +1,43 @@
-"""
-=========================================================
-DFT Toolkit
-Band Structure Model
-=========================================================
-"""
+from dataclasses import dataclass
 
 import numpy as np
 
 
+@dataclass
 class BandStructure:
 
-    def __init__(self,
-                 kpoints,
-                 energies,
-                 occupations=None,
-                 projections=None):
-
-        self.kpoints = np.asarray(kpoints)
-        self.energies = np.asarray(energies)
-
-        self.occupations = occupations
-        self.projections = projections
+    efermi: float
+    kpoints: np.ndarray
+    weights: np.ndarray
+    eigenvalues: np.ndarray
+    occupations: np.ndarray
+    projections: np.ndarray | None = None
 
     @property
     def nkpts(self):
-        return self.energies.shape[0]
+        return self.kpoints.shape[0]
 
     @property
     def nbands(self):
-        return self.energies.shape[1]
+        return self.eigenvalues.shape[1]
 
     @property
-    def shape(self):
-        return self.energies.shape
+    def nelect(self):
+        return float(self.occupations.sum() / 2.0)
 
-    def summary(self):
+    @classmethod
+    def from_vasp(cls, outcar, eigenval, procar=None):
 
-        print()
-        print("="*60)
-        print("Band Structure")
-        print("="*60)
-        print(f"NKPTS  : {self.nkpts}")
-        print(f"NBANDS : {self.nbands}")
+        projections = None
 
-        print("Occupation :", self.occupations is not None)
-        print("Projection :", self.projections is not None)
-        print("="*60)
+        if procar is not None:
+            projections = procar.projections
+
+        return cls(
+            efermi=outcar.fermi,
+            kpoints=eigenval.kpoints,
+            weights=eigenval.weights,
+            eigenvalues=eigenval.eigenvalues,
+            occupations=eigenval.occupations,
+            projections=projections,
+        )
