@@ -3,12 +3,7 @@ from pathlib import Path
 
 class BaseParser:
     """
-    Base class for all parsers.
-
-    Backward compatible:
-        self.filename
-        self.path
-        self.lines
+    Base class for all VASP parsers.
     """
 
     def __init__(self):
@@ -18,6 +13,16 @@ class BaseParser:
     def read(self, filename):
 
         self.filename = Path(filename)
+
+        if not self.filename.exists():
+            raise FileNotFoundError(
+                f"Input file not found: {self.filename}"
+            )
+
+        if self.filename.is_dir():
+            raise IsADirectoryError(
+                f"Expected a file but got a directory: {self.filename}"
+            )
 
         with open(self.filename, "r", encoding="utf-8") as f:
             self.lines = f.readlines()
