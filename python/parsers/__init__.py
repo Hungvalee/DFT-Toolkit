@@ -8,3 +8,4 @@ from .chgcar import CHGCARParser
 from .locpot import LOCPOTParser
 from .incar import INCARParser
 from .kpoints import KPOINTSParser
+from .vasprun import VASPRUNParser

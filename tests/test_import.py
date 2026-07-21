@@ -93,3 +93,6 @@ def test_incar():
 
 def test_kpoints_parser():
     from python import KPOINTSParser
+
+def test_vasprun():
+    from python import VASPRUNParser
