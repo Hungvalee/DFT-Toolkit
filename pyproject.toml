@@ -27,3 +27,6 @@ packages = [
     "python.plotting",
     "python.analysis"
 ]
+
+[project.scripts]
+dft-toolkit = "python.cli.main:main"
