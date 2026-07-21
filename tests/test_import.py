@@ -90,3 +90,6 @@ def test_csv_report_writer():
 
 def test_incar():
     from python import INCARParser
+
+def test_kpoints_parser():
+    from python import KPOINTSParser
