@@ -45,3 +45,6 @@ def test_chgcar():
 
 def test_locpot():
     from python import LOCPOTParser
+
+def test_work_function():
+    from python import WorkFunctionAnalyzer
