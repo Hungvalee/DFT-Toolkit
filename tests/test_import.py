@@ -63,3 +63,6 @@ def test_density_profile():
 
 def test_profile_writer():
     from python import ProfileWriter
+
+def test_bandstructure_writer():
+    from python import BandStructureWriter
