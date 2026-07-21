@@ -35,3 +35,4 @@ from .parsers import VASPRUNParser
 from .parsers import POTCARParser
 from .exceptions import DFTToolkitError, ParserError, InvalidFileError
 from .batch import scan_vasp_directories
+from .plugins import Plugin, register, get, names
