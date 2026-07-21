@@ -22,3 +22,4 @@ from .analysis import ChargeDifferenceAnalyzer
 from .analysis import DensityProfileAnalyzer
 from .io import ProfileWriter
 from .io import BandStructureWriter
+from .core import KPath

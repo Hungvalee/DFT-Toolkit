@@ -66,3 +66,6 @@ def test_profile_writer():
 
 def test_bandstructure_writer():
     from python import BandStructureWriter
+
+def test_kpath():
+    from python import KPath
