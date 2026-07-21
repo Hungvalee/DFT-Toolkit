@@ -54,3 +54,6 @@ def test_bandstructure():
 
 def test_effective_mass():
     from python import EffectiveMassAnalyzer
+
+def test_charge_difference():
+    from python import ChargeDifferenceAnalyzer
