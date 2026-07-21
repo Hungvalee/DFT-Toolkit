@@ -42,3 +42,6 @@ def test_xdatcar():
 
 def test_chgcar():
     from python import CHGCARParser
+
+def test_locpot():
+    from python import LOCPOTParser

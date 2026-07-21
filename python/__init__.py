@@ -14,3 +14,5 @@ from .parsers import POSCARParser
 from .io import POSCARWriter
 from .parsers import XDATCARParser
 from .parsers import CHGCARParser
+from .analysis import WorkFunctionAnalyzer
+from .parsers import LOCPOTParser
