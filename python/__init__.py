@@ -25,3 +25,4 @@ from .io import BandStructureWriter
 from .core import KPath
 from .core import DOS
 from .analysis import BandGapAnalyzer
+from .core import BandGapResult

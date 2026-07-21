@@ -75,3 +75,6 @@ def test_dos():
 
 def test_bandgap_analyzer():
     from python import BandGapAnalyzer
+
+def test_bandgap_result():
+    from python import BandGapResult

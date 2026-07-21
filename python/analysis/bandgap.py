@@ -1,5 +1,7 @@
 import numpy as np
 
+from python.core import BandGapResult
+
 
 class BandGapAnalyzer:
     """
@@ -70,3 +72,20 @@ class BandGapAnalyzer:
         Return the fundamental band gap.
         """
         return self.cbm()[0] - self.vbm()[0]
+
+    def summary(self):
+        """
+        Return a BandGapResult object.
+        """
+        vbm = self.vbm()
+        cbm = self.cbm()
+
+        return BandGapResult(
+            gap=cbm[0] - vbm[0],
+            vbm_energy=vbm[0],
+            cbm_energy=cbm[0],
+            vbm_kpoint=vbm[1],
+            cbm_kpoint=cbm[1],
+            vbm_band=vbm[2],
+            cbm_band=cbm[2],
+        )
