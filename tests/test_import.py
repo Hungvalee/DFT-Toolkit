@@ -81,3 +81,9 @@ def test_bandgap_result():
 
 def test_electronic_structure_report():
     from python import ElectronicStructureReport
+
+def test_json_report_writer():
+    from python import JSONReportWriter
+
+def test_csv_report_writer():
+    from python import CSVReportWriter
