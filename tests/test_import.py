@@ -69,3 +69,9 @@ def test_bandstructure_writer():
 
 def test_kpath():
     from python import KPath
+
+def test_dos():
+    from python import DOS
+
+def test_bandgap_analyzer():
+    from python import BandGapAnalyzer

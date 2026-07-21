@@ -23,3 +23,5 @@ from .analysis import DensityProfileAnalyzer
 from .io import ProfileWriter
 from .io import BandStructureWriter
 from .core import KPath
+from .core import DOS
+from .analysis import BandGapAnalyzer

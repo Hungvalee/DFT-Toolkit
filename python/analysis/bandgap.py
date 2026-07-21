@@ -1,121 +1,72 @@
-"""
-=========================================================
-DFT Toolkit
-Band Gap Analyzer
-=========================================================
-"""
-
 import numpy as np
 
 
 class BandGapAnalyzer:
+    """
+    Analyze the band gap from a BandStructure object.
+    """
 
-    def __init__(self, parser):
+    def __init__(self, bandstructure):
+        self.bs = bandstructure
 
-        self.parser = parser
+    def vbm(self):
+        """
+        Return the Valence Band Maximum (VBM).
 
-        self.vbm = None
-        self.cbm = None
-        self.gap = None
+        Returns
+        -------
+        tuple
+            (energy, kpoint_index, band_index)
+        """
+        occ = self.bs.occupations > 0.5
 
-        self.vbm_kpoint = None
-        self.cbm_kpoint = None
+        energies = np.where(
+            occ,
+            self.bs.eigenvalues,
+            -np.inf,
+        )
 
-        self.vbm_band = None
-        self.cbm_band = None
+        idx = np.unravel_index(
+            np.argmax(energies),
+            energies.shape,
+        )
 
-    # -------------------------------------------------
+        return (
+            float(energies[idx]),
+            int(idx[0]),
+            int(idx[1]),
+        )
 
-    def analyze(self):
+    def cbm(self):
+        """
+        Return the Conduction Band Minimum (CBM).
 
-        eig = self.parser.eigenvalues
-        occ = self.parser.occupations
+        Returns
+        -------
+        tuple
+            (energy, kpoint_index, band_index)
+        """
+        occ = self.bs.occupations <= 0.5
 
-        occ_mask = occ > 0.5
-        emp_mask = occ <= 0.5
+        energies = np.where(
+            occ,
+            self.bs.eigenvalues,
+            np.inf,
+        )
 
-        occupied = eig[occ_mask]
-        empty = eig[emp_mask]
+        idx = np.unravel_index(
+            np.argmin(energies),
+            energies.shape,
+        )
 
-        if occupied.size == 0:
-            raise RuntimeError("No occupied states found.")
+        return (
+            float(energies[idx]),
+            int(idx[0]),
+            int(idx[1]),
+        )
 
-        if empty.size == 0:
-            raise RuntimeError("No unoccupied states found.")
-
-        self.vbm = occupied.max()
-        self.cbm = empty.min()
-
-        self.gap = self.cbm - self.vbm
-
-        self.vbm_kpoint, self.vbm_band = np.argwhere(
-            (eig == self.vbm) & occ_mask
-        )[0]
-
-        self.cbm_kpoint, self.cbm_band = np.argwhere(
-            (eig == self.cbm) & emp_mask
-        )[0]
-
-        return self
-
-    # -------------------------------------------------
-
-    @property
-    def is_direct(self):
-
-        return self.vbm_kpoint == self.cbm_kpoint
-
-    # -------------------------------------------------
-
-    @property
-    def gap_type(self):
-
-        return "Direct" if self.is_direct else "Indirect"
-
-    # -------------------------------------------------
-
-    def to_dict(self):
-
-        return {
-
-            "vbm": float(self.vbm),
-            "cbm": float(self.cbm),
-            "gap": float(self.gap),
-
-            "gap_type": self.gap_type,
-
-            "vbm_kpoint": int(self.vbm_kpoint),
-            "cbm_kpoint": int(self.cbm_kpoint),
-
-            "vbm_band": int(self.vbm_band),
-            "cbm_band": int(self.cbm_band)
-
-        }
-
-    # -------------------------------------------------
-
-    def summary(self):
-
-        print()
-        print("=" * 60)
-        print("Band Gap Analysis")
-        print("=" * 60)
-
-        print(f"VBM : {self.vbm:.6f} eV")
-        print(f"CBM : {self.cbm:.6f} eV")
-        print(f"Gap : {self.gap:.6f} eV")
-
-        print()
-
-        print(f"VBM k-point : {self.vbm_kpoint}")
-        print(f"VBM band    : {self.vbm_band}")
-
-        print(f"CBM k-point : {self.cbm_kpoint}")
-        print(f"CBM band    : {self.cbm_band}")
-
-        print()
-
-        print(f"Gap type    : {self.gap_type}")
-
-        print("=" * 60)
-
+    def band_gap(self):
+        """
+        Return the fundamental band gap.
+        """
+        return self.cbm()[0] - self.vbm()[0]
