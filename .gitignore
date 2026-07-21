@@ -23,3 +23,8 @@ dos*.png
 
 # macOS
 .DS_Store
+
+# Packaging
+*.egg-info/
+build/
+dist/
