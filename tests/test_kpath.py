@@ -1,6 +1,6 @@
 import numpy as np
 
-from python import KPath
+from dft_toolkit import KPath
 
 
 def test_kpath():

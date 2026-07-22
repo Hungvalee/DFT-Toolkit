@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from python import INCARParser
+from dft_toolkit import INCARParser
 
 DATA = Path(__file__).parent / "data" / "incar"
 

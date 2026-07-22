@@ -1,6 +1,6 @@
 import pytest
 
-from python.parsers.base import BaseParser
+from dft_toolkit.parsers.base import BaseParser
 
 
 def test_missing_file():

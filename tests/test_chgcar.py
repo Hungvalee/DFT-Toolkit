@@ -2,7 +2,7 @@ from pathlib import Path
 
 import pytest
 
-from python import CHGCARParser
+from dft_toolkit import CHGCARParser
 
 DATA = Path(__file__).parent/"data"/"chgcar"/"CHGCAR"
 

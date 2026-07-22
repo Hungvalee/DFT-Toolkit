@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from python import POTCARParser
+from dft_toolkit import POTCARParser
 
 DATA = Path(__file__).parent / "data" / "potcar"
 

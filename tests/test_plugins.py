@@ -1,4 +1,4 @@
-from python import Plugin, register, get
+from dft_toolkit import Plugin, register, get
 
 
 class DemoPlugin(Plugin):

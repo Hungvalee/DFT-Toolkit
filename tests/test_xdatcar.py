@@ -2,7 +2,7 @@ from pathlib import Path
 
 import pytest
 
-from python import XDATCARParser
+from dft_toolkit import XDATCARParser
 
 DATA = Path(__file__).parent/"data"/"xdatcar"/"XDATCAR"
 

@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from python import KPOINTSParser
+from dft_toolkit import KPOINTSParser
 
 DATA = Path(__file__).parent / "data" / "kpoints"
 

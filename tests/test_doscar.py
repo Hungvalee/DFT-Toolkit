@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from python import DOSCARParser
+from dft_toolkit import DOSCARParser
 
 DATA = Path(__file__).parent / "data" / "gaas" / "DOSCAR"
 

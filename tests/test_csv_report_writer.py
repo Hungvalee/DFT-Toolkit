@@ -1,4 +1,4 @@
-from python import CSVReportWriter
+from dft_toolkit import CSVReportWriter
 
 
 def test_csv_writer(tmp_path):

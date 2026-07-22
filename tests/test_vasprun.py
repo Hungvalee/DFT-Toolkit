@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from python import VASPRUNParser
+from dft_toolkit import VASPRUNParser
 
 DATA = Path(__file__).parent / "data" / "vasprun"
 

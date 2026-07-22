@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from python import scan_vasp_directories
+from dft_toolkit import scan_vasp_directories
 
 
 def test_batch_scan():

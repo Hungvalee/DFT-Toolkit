@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from python import OUTCARParser
+from dft_toolkit import OUTCARParser
 
 DATA = Path(__file__).parent / "data" / "gaas" / "OUTCAR"
 

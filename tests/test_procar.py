@@ -2,7 +2,7 @@ from pathlib import Path
 
 import pytest
 
-from python import PROCARParser
+from dft_toolkit import PROCARParser
 
 DATA = Path(__file__).parent / "data" / "gaas" / "PROCAR"
 

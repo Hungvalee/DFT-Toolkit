@@ -2,7 +2,7 @@ from pathlib import Path
 
 import pytest
 
-from python import (
+from dft_toolkit import (
     LOCPOTParser,
     DensityProfileAnalyzer,
 )

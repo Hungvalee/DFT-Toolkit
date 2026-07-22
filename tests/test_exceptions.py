@@ -1,4 +1,4 @@
-from python import (
+from dft_toolkit import (
     DFTToolkitError,
     ParserError,
     InvalidFileError,

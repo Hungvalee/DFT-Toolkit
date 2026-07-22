@@ -1,8 +1,8 @@
 from pathlib import Path
 import numpy as np
 
-from python import POSCARParser
-from python import POSCARWriter
+from dft_toolkit import POSCARParser
+from dft_toolkit import POSCARWriter
 
 DATA = Path(__file__).parent/"data"/"graphene"/"POSCAR"
 

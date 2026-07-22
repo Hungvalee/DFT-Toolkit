@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from python import (
+from dft_toolkit import (
     DOS,
     DOSCARParser,
     OUTCARParser,

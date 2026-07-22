@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from python import JSONReportWriter
+from dft_toolkit import JSONReportWriter
 
 
 def test_json_writer(tmp_path):

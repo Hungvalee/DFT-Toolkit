@@ -2,8 +2,8 @@ from pathlib import Path
 
 import pytest
 
-from python import LOCPOTParser
-from python import WorkFunctionAnalyzer
+from dft_toolkit import LOCPOTParser
+from dft_toolkit import WorkFunctionAnalyzer
 
 DATA = Path(__file__).parent / "data" / "locpot" / "LOCPOT"
 

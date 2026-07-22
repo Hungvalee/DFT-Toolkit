@@ -2,7 +2,7 @@ from pathlib import Path
 
 import pytest
 
-from python import EIGENVALParser
+from dft_toolkit import EIGENVALParser
 
 DATA = Path(__file__).parent / "data" / "gaas" / "EIGENVAL"
 

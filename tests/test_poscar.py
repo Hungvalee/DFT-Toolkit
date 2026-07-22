@@ -2,7 +2,7 @@ from pathlib import Path
 
 import pytest
 
-from python import POSCARParser
+from dft_toolkit import POSCARParser
 
 DATA = Path(__file__).parent/"data"/"graphene"/"POSCAR"
 

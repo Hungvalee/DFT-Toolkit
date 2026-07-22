@@ -2,7 +2,7 @@ from pathlib import Path
 
 import pytest
 
-from python import LOCPOTParser
+from dft_toolkit import LOCPOTParser
 
 DATA = Path(__file__).parent/"data"/"locpot"/"LOCPOT"
 

@@ -2,8 +2,8 @@ from pathlib import Path
 
 import pytest
 
-from python import CHGCARParser
-from python import ChargeDifferenceAnalyzer
+from dft_toolkit import CHGCARParser
+from dft_toolkit import ChargeDifferenceAnalyzer
 
 DATA = Path(__file__).parent / "data" / "chgcar" / "CHGCAR"
 
