@@ -48,7 +48,7 @@ Repository = "https://github.com/Hungvalee/DFT-Toolkit"
 Issues = "https://github.com/Hungvalee/DFT-Toolkit/issues"
 
 [project.scripts]
-dft-toolkit = "python.cli.main:main"
+dft-toolkit = "dft_toolkit.cli.main:main"
 
 [tool.setuptools.packages.find]
-include = ["python*"]
+include = ["dft_toolkit*"]

@@ -7,7 +7,7 @@ OUTCAR Parser
 
 import re
 
-from python.parsers.base import BaseParser
+from dft_toolkit.parsers.base import BaseParser
 
 
 class OUTCARParser(BaseParser):

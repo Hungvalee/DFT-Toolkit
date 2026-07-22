@@ -1,20 +1,20 @@
 """
 =========================================================
 DFT Toolkit for VASP
-Density of States Workflow
+Band Structure Workflow
 =========================================================
 """
 
 from pathlib import Path
 
-from python.workflow.electronic import ElectronicStructureWorkflow
-from python.io.incar import INCARGenerator
-from python.io.kpoints import KPOINTSGenerator
+from dft_toolkit.workflow.electronic import ElectronicStructureWorkflow
+from dft_toolkit.io.incar import INCARGenerator
+from dft_toolkit.io.kpoints import KPOINTSGenerator
 
 
-class DOSWorkflow(ElectronicStructureWorkflow):
+class BandWorkflow(ElectronicStructureWorkflow):
     """
-    Workflow for density of states calculations.
+    Workflow for non-self-consistent band structure calculations.
     """
 
     def __init__(self):
@@ -24,13 +24,18 @@ class DOSWorkflow(ElectronicStructureWorkflow):
         self.incar = INCARGenerator()
         self.kpoints = KPOINTSGenerator()
 
-        self.mesh = (9, 9, 9)
+        self.kpath = None
+        self.divisions = 40
 
     # -------------------------------------------------
 
-    def set_mesh(self, nx, ny, nz):
+    def generate_kpath(self, path, divisions=40):
+        """
+        Define high-symmetry k-point path.
+        """
 
-        self.mesh = (nx, ny, nz)
+        self.kpath = path
+        self.divisions = divisions
 
         return self
 
@@ -40,20 +45,25 @@ class DOSWorkflow(ElectronicStructureWorkflow):
 
         self.check_scf()
 
-        self.incar.dos()
+        self.incar.band()
 
         self.incar.save("INCAR")
 
-        self.kpoints.gamma(
-            self.mesh[0],
-            self.mesh[1],
-            self.mesh[2]
+        if self.kpath is None:
+
+            raise RuntimeError(
+                "High-symmetry k-path has not been defined."
+            )
+
+        self.kpoints.line_mode(
+            divisions=self.divisions,
+            path=self.kpath
         )
 
         self.kpoints.save("KPOINTS")
 
         self.logger.info(
-            "DOS calculation input prepared."
+            "Band calculation input prepared."
         )
 
         return self
@@ -76,15 +86,15 @@ class DOSWorkflow(ElectronicStructureWorkflow):
 
         print()
         print("=" * 60)
-        print("Density of States Workflow")
+        print("Band Structure Workflow")
         print("=" * 60)
 
         for f in [
             "INCAR",
             "KPOINTS",
-            "DOSCAR",
             "CHGCAR",
             "WAVECAR",
+            "EIGENVAL",
             "OUTCAR",
         ]:
 

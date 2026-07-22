@@ -9,9 +9,9 @@ from pathlib import Path
 import shutil
 import subprocess
 
-from python.core.config import ConfigManager
-from python.core.logger import get_logger
-from python.io.templates import TemplateManager
+from dft_toolkit.core.config import ConfigManager
+from dft_toolkit.core.logger import get_logger
+from dft_toolkit.io.templates import TemplateManager
 
 
 class WorkflowError(Exception):

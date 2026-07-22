@@ -1,7 +1,7 @@
 import numpy as np
 
 from .base import BaseParser
-from python.core import Structure
+from dft_toolkit.core import Structure
 
 
 class LOCPOTParser(BaseParser):

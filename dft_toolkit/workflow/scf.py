@@ -7,10 +7,10 @@ SCF Workflow
 
 from pathlib import Path
 
-from python.workflow.base import BaseWorkflow
-from python.io.incar import INCARGenerator
-from python.io.kpoints import KPOINTSGenerator
-from python.io.potcar import POTCARManager
+from dft_toolkit.workflow.base import BaseWorkflow
+from dft_toolkit.io.incar import INCARGenerator
+from dft_toolkit.io.kpoints import KPOINTSGenerator
+from dft_toolkit.io.potcar import POTCARManager
 
 
 class SCFWorkflow(BaseWorkflow):

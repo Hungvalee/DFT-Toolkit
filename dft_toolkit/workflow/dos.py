@@ -1,20 +1,20 @@
 """
 =========================================================
 DFT Toolkit for VASP
-Band Structure Workflow
+Density of States Workflow
 =========================================================
 """
 
 from pathlib import Path
 
-from python.workflow.electronic import ElectronicStructureWorkflow
-from python.io.incar import INCARGenerator
-from python.io.kpoints import KPOINTSGenerator
+from dft_toolkit.workflow.electronic import ElectronicStructureWorkflow
+from dft_toolkit.io.incar import INCARGenerator
+from dft_toolkit.io.kpoints import KPOINTSGenerator
 
 
-class BandWorkflow(ElectronicStructureWorkflow):
+class DOSWorkflow(ElectronicStructureWorkflow):
     """
-    Workflow for non-self-consistent band structure calculations.
+    Workflow for density of states calculations.
     """
 
     def __init__(self):
@@ -24,18 +24,13 @@ class BandWorkflow(ElectronicStructureWorkflow):
         self.incar = INCARGenerator()
         self.kpoints = KPOINTSGenerator()
 
-        self.kpath = None
-        self.divisions = 40
+        self.mesh = (9, 9, 9)
 
     # -------------------------------------------------
 
-    def generate_kpath(self, path, divisions=40):
-        """
-        Define high-symmetry k-point path.
-        """
+    def set_mesh(self, nx, ny, nz):
 
-        self.kpath = path
-        self.divisions = divisions
+        self.mesh = (nx, ny, nz)
 
         return self
 
@@ -45,25 +40,20 @@ class BandWorkflow(ElectronicStructureWorkflow):
 
         self.check_scf()
 
-        self.incar.band()
+        self.incar.dos()
 
         self.incar.save("INCAR")
 
-        if self.kpath is None:
-
-            raise RuntimeError(
-                "High-symmetry k-path has not been defined."
-            )
-
-        self.kpoints.line_mode(
-            divisions=self.divisions,
-            path=self.kpath
+        self.kpoints.gamma(
+            self.mesh[0],
+            self.mesh[1],
+            self.mesh[2]
         )
 
         self.kpoints.save("KPOINTS")
 
         self.logger.info(
-            "Band calculation input prepared."
+            "DOS calculation input prepared."
         )
 
         return self
@@ -86,15 +76,15 @@ class BandWorkflow(ElectronicStructureWorkflow):
 
         print()
         print("=" * 60)
-        print("Band Structure Workflow")
+        print("Density of States Workflow")
         print("=" * 60)
 
         for f in [
             "INCAR",
             "KPOINTS",
+            "DOSCAR",
             "CHGCAR",
             "WAVECAR",
-            "EIGENVAL",
             "OUTCAR",
         ]:
 

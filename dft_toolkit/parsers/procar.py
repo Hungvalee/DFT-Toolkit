@@ -8,8 +8,8 @@ PROCAR Parser
 import re
 import numpy as np
 
-from python.parsers.base import BaseParser
-from python.core.bandstructure import BandStructure
+from dft_toolkit.parsers.base import BaseParser
+from dft_toolkit.core.bandstructure import BandStructure
 
 
 class PROCARParser(BaseParser):
@@ -174,11 +174,13 @@ class PROCARParser(BaseParser):
 
     # -------------------------------------------------
 
-    def to_bandstructure(self):
+    def to_bandstructure(self, efermi=0.0):
 
         return BandStructure(
+            efermi=efermi,
             kpoints=self.kpoints,
-            energies=self.band_energy,
+            weights=np.ones(self.nkpts),
+            eigenvalues=self.band_energy,
             occupations=self.band_occ,
             projections=self.projections,
         )

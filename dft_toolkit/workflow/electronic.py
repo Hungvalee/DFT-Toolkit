@@ -8,7 +8,7 @@ Electronic Structure Workflow
 from pathlib import Path
 import shutil
 
-from python.workflow.base import BaseWorkflow
+from dft_toolkit.workflow.base import BaseWorkflow
 
 
 class ElectronicStructureWorkflow(BaseWorkflow):

@@ -1,7 +1,7 @@
 from pathlib import Path
 import shutil
 import yaml
-from python.core.config import ConfigManager
+from dft_toolkit.core.config import ConfigManager
 
 
 class POTCARError(Exception):

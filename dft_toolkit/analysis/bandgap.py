@@ -1,6 +1,6 @@
 import numpy as np
 
-from python.core import BandGapResult
+from dft_toolkit.core import BandGapResult
 
 
 class BandGapAnalyzer:

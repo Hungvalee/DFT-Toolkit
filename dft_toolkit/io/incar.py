@@ -5,7 +5,7 @@ INCAR Generator
 =========================================================
 """
 
-from python.io.base_input import BaseInput
+from dft_toolkit.io.base_input import BaseInput
 
 
 class INCARGenerator(BaseInput):

@@ -10,8 +10,8 @@ import shutil
 import subprocess
 from pathlib import Path
 
-from python.core.version import show_version
-from python.workflow.relax import RelaxWorkflow
+from dft_toolkit.core.version import show_version
+from dft_toolkit.workflow.relax import RelaxWorkflow
 
 ROOT = Path(__file__).resolve().parents[2]
 

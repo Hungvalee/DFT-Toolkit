@@ -5,7 +5,7 @@ Geometry Relaxation Workflow
 =========================================================
 """
 
-from python.workflow.base import BaseWorkflow
+from dft_toolkit.workflow.base import BaseWorkflow
 
 
 class RelaxWorkflow(BaseWorkflow):

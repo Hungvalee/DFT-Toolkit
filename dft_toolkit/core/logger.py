@@ -8,7 +8,7 @@ Logging Manager
 import logging
 from pathlib import Path
 
-from python.core.config import ConfigManager
+from dft_toolkit.core.config import ConfigManager
 
 
 def get_logger(name="DFTToolkit"):

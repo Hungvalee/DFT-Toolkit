@@ -7,7 +7,7 @@ EIGENVAL Parser
 
 import numpy as np
 
-from python.parsers.base import BaseParser
+from dft_toolkit.parsers.base import BaseParser
 
 
 class EIGENVALParser(BaseParser):

@@ -1,4 +1,4 @@
-from python.analysis.bandgap import BandGapAnalyzer
+from dft_toolkit.analysis.bandgap import BandGapAnalyzer
 
 
 class ElectronicStructureReport:
