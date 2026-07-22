@@ -35,6 +35,11 @@ class EIGENVALParser(BaseParser):
         # line 6:
         # nelect nkpts nbands
         #
+        if len(self.lines) < 6:
+            raise ValueError(
+                f"EIGENVAL file '{self.filename}' is empty or incomplete."
+            )
+
         head = self.lines[5].split()
 
         self.nelect = int(head[0])
