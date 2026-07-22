@@ -56,7 +56,6 @@ pip install dft-toolkit
 git clone https://github.com/YOUR_GITHUB_USERNAME/DFT-Toolkit.git
 cd DFT-Toolkit
 pip install -e .
-
 Sau khi dán xong, **chỉ gõ đúng một dòng**:
 
 ```text
@@ -71,21 +70,9 @@ from python.parsers import OUTCARParser
 outcar = OUTCARParser().read("OUTCAR").parse()
 
 print(outcar)
+dft-toolkit --help
 pytest -v
-cat >> README.md <<'EOF'
-
----
-
-## Quick Start
-
-```python
-from python.parsers import OUTCARParser
-
-outcar = OUTCARParser().read("OUTCAR").parse()
-
-print(outcar)
-pytest -v
-dft-toolkit --helppython/
+python/
 ├── analysis/
 ├── cli/
 ├── core/
@@ -97,6 +84,7 @@ dft-toolkit --helppython/
 tests/
 examples/
 docs/
+
 ---
 
 ## Bước 4. Thêm phần cuối
