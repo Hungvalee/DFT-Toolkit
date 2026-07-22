@@ -1,57 +1,35 @@
 import argparse
 
-from python.parsers import OUTCARParser
-from python.analysis import BandGapAnalyzer
-
-
-def cmd_info(args):
-    parser = OUTCARParser().read(args.file)
-    data = parser.parse()
-    print(data)
-
-
-def cmd_bandgap(args):
-    analyzer = BandGapAnalyzer(args.file)
-    result = analyzer.analyze()
-    print(result)
+from . import commands
 
 
 def main():
-
     parser = argparse.ArgumentParser(
         prog="dft-toolkit",
         description="DFT-Toolkit command-line interface"
     )
 
-    subparsers = parser.add_subparsers(dest="command")
+    sub = parser.add_subparsers(dest="command")
 
-    info = subparsers.add_parser(
-        "info",
-        help="Read OUTCAR information"
-    )
-    info.add_argument("file")
-    info.set_defaults(func=cmd_info)
+    p = sub.add_parser("info", help="Read OUTCAR information")
+    p.add_argument("file")
 
-    bandgap = subparsers.add_parser(
-        "bandgap",
-        help="Calculate band gap"
-    )
-    bandgap.add_argument("file")
-    bandgap.set_defaults(func=cmd_bandgap)
+    p = sub.add_parser("bandgap", help="Calculate band gap")
+    p.add_argument("file")
 
-    version = subparsers.add_parser(
-        "version",
-        help="Show version"
-    )
+    sub.add_parser("version", help="Show version")
 
     args = parser.parse_args()
 
-    if args.command == "version":
-        print("DFT-Toolkit v1.0.0-dev")
-        return
+    if args.command == "info":
+        commands.info(args.file)
 
-    if hasattr(args, "func"):
-        args.func(args)
+    elif args.command == "bandgap":
+        commands.bandgap(args.file)
+
+    elif args.command == "version":
+        commands.version()
+
     else:
         parser.print_help()
 
