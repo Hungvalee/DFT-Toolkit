@@ -128,3 +128,30 @@ If this project is useful in your research, please cite DFT-Toolkit in your publ
 ## License
 
 MIT License
+
+---
+
+## Examples
+
+The project provides several ready-to-run examples.
+
+```text
+examples/
+├── outcar_parser.py
+├── dos.py
+├── bandgap.py
+├── effective_mass.py
+└── workfunction.py
+python examples/bandgap.py
+
+---
+
+## Bước 8. Kiểm tra
+
+```bash
+ls examples
+bandgap.py
+dos.py
+effective_mass.py
+outcar_parser.py
+workfunction.py
