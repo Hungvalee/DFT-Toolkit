@@ -8,6 +8,7 @@ EIGENVAL Parser
 import numpy as np
 
 from dft_toolkit.parsers.base import BaseParser
+from dft_toolkit.core import BandStructure
 
 
 class EIGENVALParser(BaseParser):
@@ -86,6 +87,19 @@ class EIGENVALParser(BaseParser):
         self.occupations = np.array(occ)
 
         return self
+
+    # -------------------------------------------------
+
+    def to_bandstructure(self, efermi=0.0):
+
+        return BandStructure(
+            efermi=efermi,
+            kpoints=self.kpoints,
+            weights=self.weights,
+            eigenvalues=self.eigenvalues,
+            occupations=self.occupations,
+            projections=None,
+        )
 
     # -------------------------------------------------
 
